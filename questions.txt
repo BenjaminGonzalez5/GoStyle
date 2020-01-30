@@ -1,0 +1,7 @@
+Questions :
+
+- Android Studio vs autres IDE : doit-on faire le benchmark ?
+- Plus de maquettes ?
+- Quelles tables mettre dans le MVC potentiel (produit par exemple)
+- Génération des QRCodes ?
+- Partie administration ?
