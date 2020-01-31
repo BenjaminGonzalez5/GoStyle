@@ -1,7 +1,15 @@
 Questions :
 
-- Android Studio vs autres IDE : doit-on faire le benchmark ?
-- Plus de maquettes ?
-- Quelles tables mettre dans le MVC potentiel (produit par exemple)
-- Génération des QRCodes ?
-- Partie administration ?
+1) Android Studio vs autres IDE : doit-on faire le benchmark ?
+2) Plus de maquettes ?
+3) Quelles tables mettre dans le MVC potentiel (produit par exemple)
+4) Génération des QRCodes ?
+5) Partie administration ?
+
+Réponses :
+
+1) Pas besoin, il suffit de choisir un langage.
+2) Pas nécessaire (peut-être une pour la connexion).
+3) 3 tables sont en principes choisies (personne, coupon...)
+4) Ne pas prévoir cette partie
+5) Ne pas prévoir cette partie
