@@ -41,7 +41,7 @@ public class TestUtilisateurService {
     }
 
     @Test
-    public void exceptionGetUtilisateurTest() throws UtilisateurServiceException{
+    public void exceptionGetUtilisateurTest() throws UtilisateurServiceException {
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setId(1L);
         utilisateur.setPassword("pass");
@@ -55,15 +55,29 @@ public class TestUtilisateurService {
 
     @Test
     /* Test si l'utilisateur est bien renvoyer si on passe une combinaison email mot de passe valide */
-    public void getUtilisateurByEmailAndPasswordTest(){
+    public void getUtilisateurByEmailAndPasswordTest() throws InvalidEmailException {
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setId(1L);
         utilisateur.setPassword("pass");
         utilisateur.setEmail("aze@aze.fr");
         when(utilisateurDao.getUtilisateurByEmailAndPassword("aze@aze.fr", "pass")).thenReturn(utilisateur);
 
-        Utilisateur userFound = utilisateurService.getUtilisateurByEmailAndPassword("aze@aze.fr", "pass");
+        Utilisateur userFound = utilisateurService.getUtilisateurByEmailAndPassword(new UtilisateurDto(utilisateur));
 
         assertThat(userFound).isEqualTo(utilisateur);
     }
+
+    @Test
+    public void getUtilisateurById() {
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setId(1L);
+        utilisateur.setPassword("pass");
+        utilisateur.setEmail("aze@aze.fr");
+        when(utilisateurDao.getUtilisateurById(1L)).thenReturn(utilisateur);
+
+        Utilisateur userFound = utilisateurService.getUtilisateurById(1L);
+
+        assertThat(userFound).isEqualTo(utilisateur);
+    }
+
 }

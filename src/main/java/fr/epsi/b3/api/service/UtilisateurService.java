@@ -14,19 +14,20 @@ public class UtilisateurService {
 
     @Transactional
     /* Renvoi l'utilisateur rataché a l'email passer en paramettre
-    * un erreur si l'email est incorrecte */
+     * un erreur si l'email est incorrecte */
     public Utilisateur getUtilisateurByEmail(String s) throws UtilisateurServiceException {
-        if (utilisateurDao.getUtilisateurByEmail(s) == null){
+        if (utilisateurDao.getUtilisateurByEmail(s) == null) {
             throw new UtilisateurServiceException("Aucun compte utilisateur trouvé.");
         }
         return utilisateurDao.getUtilisateurByEmail(s);
     }
 
-    public Utilisateur getUtilisateurByEmailAndPassword(String email, String pass) {
-        return utilisateurDao.getUtilisateurByEmailAndPassword(email, pass);
+    public Utilisateur getUtilisateurByEmailAndPassword(UtilisateurDto utilisateurDto) throws InvalidEmailException {
+        if (! utilisateurDto.matchRegex()){ throw new InvalidEmailException("Email Invalid"); }
+        return utilisateurDao.getUtilisateurByEmailAndPassword(utilisateurDto.getEmail(), utilisateurDto.getPassword());
     }
 
-    public Utilisateur getUtilisateurById(long id){
+    public Utilisateur getUtilisateurById(long id) {
         return utilisateurDao.getUtilisateurById(id);
     }
 }

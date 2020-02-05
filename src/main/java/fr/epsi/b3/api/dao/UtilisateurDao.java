@@ -12,13 +12,13 @@ public class UtilisateurDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public Utilisateur getUtilisateurByEmail(String email){
+    public Utilisateur getUtilisateurByEmail(String email) {
         return entityManager.createQuery("select u from utilisateur u where u.email = :param", Utilisateur.class)
-        .setParameter("param", email)
-        .getSingleResult();
+                .setParameter("param", email)
+                .getSingleResult();
     }
 
-    public Utilisateur getUtilisateurById(long id){
+    public Utilisateur getUtilisateurById(long id) {
         return entityManager.createQuery("select u from utilisateur u where u.id = :param", Utilisateur.class)
                 .setParameter("param", id)
                 .getSingleResult();
