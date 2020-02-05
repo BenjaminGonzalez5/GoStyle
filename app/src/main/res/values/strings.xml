@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">GoStyle</string>
+    <string name="placeholder_inputemail">Username</string>
+    <string name="placeholder_inputpassword">Password</string>
+    <string name="button_submit">Valider</string>
+    <string name="textView_connexion">Connectez-vous</string>
+    <string name="contentDescription_back">back</string>
+    <string name="contentDescription_camera">camera</string>
+</resources>
