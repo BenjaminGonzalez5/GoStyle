@@ -31,8 +31,8 @@ public class ApiGoStyleController {
 
     @GetMapping(path = "/user/{id}", produces = {"application/json"})
     @ResponseBody
-    public Utilisateur getById(@PathVariable String id) throws Exception {
-        return utilisateurService.getUtilisateurById(Long.valueOf(id));
+    public Utilisateur getById(@PathVariable String id) {
+        return utilisateurService.getUtilisateurById(Long.parseLong(id));
     }
 
     @PostMapping(path = "/user", produces = "application/json", consumes = "application/json")
