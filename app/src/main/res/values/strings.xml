@@ -6,4 +6,5 @@
     <string name="textView_connexion">Connectez-vous</string>
     <string name="contentDescription_back">back</string>
     <string name="contentDescription_camera">camera</string>
+    <string name="dateExpiration">Date d\'expiration :</string>
 </resources>

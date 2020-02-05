@@ -30,7 +30,7 @@
         android:layout_marginTop="100dp"
         android:ems="10"
         android:hint="@string/placeholder_inputemail"
-        android:inputType="textPersonName"/>
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/editText2"
