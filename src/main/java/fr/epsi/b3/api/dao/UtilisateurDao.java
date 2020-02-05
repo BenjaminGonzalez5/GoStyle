@@ -17,4 +17,17 @@ public class UtilisateurDao {
         .setParameter("param", email)
         .getSingleResult();
     }
+
+    public Utilisateur getUtilisateurById(long id){
+        return entityManager.createQuery("select u from utilisateur u where u.id = :param", Utilisateur.class)
+                .setParameter("param", id)
+                .getSingleResult();
+    }
+
+    public Utilisateur getUtilisateurByEmailAndPassword(String email, String pass) {
+        return entityManager.createQuery("select u from utilisateur u where u.email = :paramEmail and u.password = :paramPass", Utilisateur.class)
+                .setParameter("paramEmail", email)
+                .setParameter("paramPass", pass)
+                .getSingleResult();
+    }
 }
