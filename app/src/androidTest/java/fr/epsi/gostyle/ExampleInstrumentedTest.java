@@ -21,8 +21,6 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
-    private Utilisateur user1 = new Utilisateur();
-
 
     @Test
     public void useAppContext() {
@@ -30,15 +28,6 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
         assertEquals("fr.epsi.gostyle", appContext.getPackageName());
-    }
-
-
-
-    @Test
-    public void affichagePageConnexionTest() {
-        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-
-        appContext.getSystemService("MainActivity");
     }
 }
 

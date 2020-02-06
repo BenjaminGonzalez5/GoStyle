@@ -10,4 +10,6 @@ public class DetailsCoupon extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detailscoupon);
     }
+
+
 }
