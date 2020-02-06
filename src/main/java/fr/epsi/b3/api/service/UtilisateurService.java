@@ -22,9 +22,9 @@ public class UtilisateurService {
         return utilisateurDao.getUtilisateurByEmail(s);
     }
 
-    public Utilisateur getUtilisateurByEmailAndPassword(UtilisateurDto utilisateurDto) throws InvalidEmailException {
-        if (! utilisateurDto.matchRegex()){ throw new InvalidEmailException("Email Invalid"); }
-        return utilisateurDao.getUtilisateurByEmailAndPassword(utilisateurDto.getEmail(), utilisateurDto.getPassword());
+    public Utilisateur getUtilisateurByEmailAndPassword(Utilisateur utilisateur) throws InvalidEmailException {
+        if (! utilisateur.matchRegex()){ throw new InvalidEmailException("Email Invalid"); }
+        return utilisateurDao.getUtilisateurByEmailAndPassword(utilisateur.getEmail(), utilisateur.getPassword());
     }
 
     public Utilisateur getUtilisateurById(long id) {

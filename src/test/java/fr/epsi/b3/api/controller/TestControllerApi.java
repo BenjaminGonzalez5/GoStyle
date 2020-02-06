@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import fr.epsi.b3.api.controleur.ApiGoStyleController;
 import fr.epsi.b3.api.modele.Utilisateur;
 import fr.epsi.b3.api.service.InvalidEmailException;
-import fr.epsi.b3.api.service.UtilisateurDto;
 import fr.epsi.b3.api.service.UtilisateurService;
 import org.junit.Before;
 import org.junit.Test;
@@ -73,7 +72,7 @@ public class TestControllerApi {
         utilisateur.setPassword("pass");
         utilisateur.setEmail("aze@aze.fr");
 
-        when(utilisateurService.getUtilisateurByEmailAndPassword(any(UtilisateurDto.class))).thenReturn(utilisateur);
+        when(utilisateurService.getUtilisateurByEmailAndPassword(any(Utilisateur.class))).thenReturn(utilisateur);
 
         mockMvc.perform(post("/user")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -90,13 +89,12 @@ public class TestControllerApi {
         utilisateur.setId(1L);
         utilisateur.setPassword("pass");
         utilisateur.setEmail("azeaze.fr");
-        UtilisateurDto utilisateurDto = new UtilisateurDto(utilisateur);
 
-        when(utilisateurService.getUtilisateurByEmailAndPassword(any(UtilisateurDto.class))).thenThrow(new InvalidEmailException("Email Invalid"));
+        when(utilisateurService.getUtilisateurByEmailAndPassword(any(Utilisateur.class))).thenThrow(new InvalidEmailException("Email Invalid"));
 
         mockMvc.perform(post("/user")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(gson.toJson(utilisateurDto)))
+                .content(gson.toJson(utilisateur)))
                 .andExpect(status().isBadRequest());
     }
 }

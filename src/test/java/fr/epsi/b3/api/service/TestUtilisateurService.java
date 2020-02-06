@@ -62,7 +62,7 @@ public class TestUtilisateurService {
         utilisateur.setEmail("aze@aze.fr");
         when(utilisateurDao.getUtilisateurByEmailAndPassword("aze@aze.fr", "pass")).thenReturn(utilisateur);
 
-        Utilisateur userFound = utilisateurService.getUtilisateurByEmailAndPassword(new UtilisateurDto(utilisateur));
+        Utilisateur userFound = utilisateurService.getUtilisateurByEmailAndPassword(utilisateur);
 
         assertThat(userFound).isEqualTo(utilisateur);
     }
