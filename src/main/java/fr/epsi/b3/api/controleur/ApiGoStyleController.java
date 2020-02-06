@@ -5,6 +5,7 @@ import fr.epsi.b3.api.service.InvalidEmailException;
 import fr.epsi.b3.api.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +40,7 @@ public class ApiGoStyleController {
         return utilisateurService.getUtilisateurById(Long.parseLong(id));
     }
 
-    @PostMapping(path = "/user", produces = "application/json", consumes = "application/json")
+    @PostMapping(path = "/user", produces = MediaType.APPLICATION_JSON_VALUE, consumes =  MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<Utilisateur> getUtilisateurFromJsonForm(@RequestBody Utilisateur utilisateur) throws InvalidEmailException {
         return ResponseEntity.ok().body(utilisateurService.getUtilisateurByEmailAndPassword(utilisateur));

@@ -3,23 +3,21 @@ package fr.epsi.b3.api.modele;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity(name = "utilisateur_coupon")
 @IdClass(UtilisateurCouponPK.class)
 public class UtilisateurCoupon {
 
     @Id
-    @JsonBackReference
     @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "utilisateur_id", nullable = false)
     private Utilisateur utilisateur;
 
     @Id
-    @JsonBackReference
     @ManyToOne
+    @JoinColumn(name = "coupon_code", nullable = false)
     private Coupon coupon;
 
     public Utilisateur getUtilisateur() {

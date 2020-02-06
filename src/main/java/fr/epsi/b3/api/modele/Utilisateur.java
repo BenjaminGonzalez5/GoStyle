@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 public class Utilisateur implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull(message = "Veuillez renseigner l'adresse mail")
@@ -28,16 +29,15 @@ public class Utilisateur implements Serializable {
     private String password;
 
     @OneToMany(fetch=FetchType.EAGER, mappedBy = "utilisateur", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<UtilisateurCoupon> utilisateurCoupons = new ArrayList<>();
+    private Set<UtilisateurCoupon> utilisateurCoupons;
 
     public Utilisateur(){}
 
-    public List<UtilisateurCoupon> getUtilisateurCoupons() {
+    public Set<UtilisateurCoupon> getUtilisateurCoupons() {
         return utilisateurCoupons;
     }
 
-    public void setUtilisateurCoupons(List<UtilisateurCoupon> utilisateurCoupons) {
+    public void setUtilisateurCoupons(Set<UtilisateurCoupon> utilisateurCoupons) {
         this.utilisateurCoupons = utilisateurCoupons;
     }
 

@@ -9,3 +9,6 @@ target
 # fichiers Itellij IDEA a ignorer
 .idea
 *.iml
+
+# fichiers conf a ignorer
+src/main/resources/jdbc.properties
