@@ -6,14 +6,24 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import fr.epsi.b3.api.dao.UtilisateurDao;
+import fr.epsi.b3.api.modele.Coupon;
 import fr.epsi.b3.api.modele.Utilisateur;
+import fr.epsi.b3.api.modele.UtilisateurCoupon;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TestUtilisateurService {
+
+    private Utilisateur utilisateur = new Utilisateur();
+    private List<UtilisateurCoupon> utilisateurCouponArrayList = new ArrayList<>();
+    private Coupon coupon = new Coupon();
+    private UtilisateurCoupon utilisateurCoupon = new UtilisateurCoupon();
 
     @InjectMocks
     UtilisateurService utilisateurService;
@@ -24,15 +34,25 @@ public class TestUtilisateurService {
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
+        utilisateur.setId(1L);
+        utilisateur.setPassword("pass");
+        utilisateur.setEmail("aze@aze.fr");
+        coupon.setCode("AAEE");
+        coupon.setDescription("10% T-Shirts");
+        utilisateurCoupon.setUtilisateur(utilisateur);
+        utilisateurCoupon.setCoupon(coupon);
+        utilisateurCouponArrayList.add(utilisateurCoupon);
+        coupon.setCode("OOPP");
+        coupon.setDescription("10% swets");
+        utilisateurCoupon.setUtilisateur(utilisateur);
+        utilisateurCoupon.setCoupon(coupon);
+        utilisateurCouponArrayList.add(utilisateurCoupon);
+        utilisateur.setUtilisateurCoupons(utilisateurCouponArrayList);
     }
 
     @Test
     /* Test si l'utilisateur est bien renvoyer si on passe un email qui existe dans la base */
     public void getUtilisateurByEmailTest() throws UtilisateurServiceException {
-        Utilisateur utilisateur = new Utilisateur();
-        utilisateur.setId(1L);
-        utilisateur.setPassword("pass");
-        utilisateur.setEmail("aze@aze.fr");
         when(utilisateurDao.getUtilisateurByEmail("aze@aze.fr")).thenReturn(utilisateur);
 
         Utilisateur userFound = utilisateurService.getUtilisateurByEmail("aze@aze.fr");
@@ -41,11 +61,8 @@ public class TestUtilisateurService {
     }
 
     @Test
+//    Renvoie une erreur si l'utilisateur n'est pas dans la base de données
     public void exceptionGetUtilisateurTest() throws UtilisateurServiceException {
-        Utilisateur utilisateur = new Utilisateur();
-        utilisateur.setId(1L);
-        utilisateur.setPassword("pass");
-        utilisateur.setEmail("aze@aze.fr");
         when(utilisateurDao.getUtilisateurByEmail("aze@aze.fr")).thenReturn(utilisateur);
 
         assertThrows(UtilisateurServiceException.class, () -> {
@@ -56,10 +73,6 @@ public class TestUtilisateurService {
     @Test
     /* Test si l'utilisateur est bien renvoyer si on passe une combinaison email mot de passe valide */
     public void getUtilisateurByEmailAndPasswordTest() throws InvalidEmailException {
-        Utilisateur utilisateur = new Utilisateur();
-        utilisateur.setId(1L);
-        utilisateur.setPassword("pass");
-        utilisateur.setEmail("aze@aze.fr");
         when(utilisateurDao.getUtilisateurByEmailAndPassword("aze@aze.fr", "pass")).thenReturn(utilisateur);
 
         Utilisateur userFound = utilisateurService.getUtilisateurByEmailAndPassword(utilisateur);
@@ -68,16 +81,17 @@ public class TestUtilisateurService {
     }
 
     @Test
-    public void getUtilisateurById() {
-        Utilisateur utilisateur = new Utilisateur();
-        utilisateur.setId(1L);
-        utilisateur.setPassword("pass");
-        utilisateur.setEmail("aze@aze.fr");
+    public void getUtilisateurByIdTest() {
         when(utilisateurDao.getUtilisateurById(1L)).thenReturn(utilisateur);
 
         Utilisateur userFound = utilisateurService.getUtilisateurById(1L);
 
         assertThat(userFound).isEqualTo(utilisateur);
+    }
+    
+    @Test
+    public void testExceptionEmailEtc(){
+        // TODO: 06/02/2020  
     }
 
 }

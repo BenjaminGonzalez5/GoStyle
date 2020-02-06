@@ -29,15 +29,15 @@ public class Utilisateur implements Serializable {
     private String password;
 
     @OneToMany(fetch=FetchType.EAGER, mappedBy = "utilisateur", cascade = CascadeType.ALL)
-    private Set<UtilisateurCoupon> utilisateurCoupons;
+    private List<UtilisateurCoupon> utilisateurCoupons = new ArrayList<>();
 
     public Utilisateur(){}
 
-    public Set<UtilisateurCoupon> getUtilisateurCoupons() {
+    public List<UtilisateurCoupon> getUtilisateurCoupons() {
         return utilisateurCoupons;
     }
 
-    public void setUtilisateurCoupons(Set<UtilisateurCoupon> utilisateurCoupons) {
+    public void setUtilisateurCoupons(List<UtilisateurCoupon> utilisateurCoupons) {
         this.utilisateurCoupons = utilisateurCoupons;
     }
 

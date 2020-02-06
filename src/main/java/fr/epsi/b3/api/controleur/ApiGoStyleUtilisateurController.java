@@ -13,7 +13,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 
 @RestController
-public class ApiGoStyleController {
+public class ApiGoStyleUtilisateurController {
 
     @Autowired
     private UtilisateurService utilisateurService;
@@ -34,7 +34,7 @@ public class ApiGoStyleController {
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     public ErreurDto handleBadBddConnection(PersistenceException e){ return new ErreurDto(e); }
 
-    @GetMapping(path = "/user/{id}", produces = {"application/json"})
+    @GetMapping(path = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Utilisateur getById(@PathVariable String id) {
         return utilisateurService.getUtilisateurById(Long.parseLong(id));

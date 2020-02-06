@@ -1,7 +1,7 @@
 package fr.epsi.b3.api.controller;
 
 import com.google.gson.Gson;
-import fr.epsi.b3.api.controleur.ApiGoStyleController;
+import fr.epsi.b3.api.controleur.ApiGoStyleUtilisateurController;
 import fr.epsi.b3.api.modele.Utilisateur;
 import fr.epsi.b3.api.service.InvalidEmailException;
 import fr.epsi.b3.api.service.UtilisateurService;
@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-public class TestControllerApi {
+public class TestControllerApiUtilisateur {
 
     private MockMvc mockMvc;
     private Gson gson = new Gson();
@@ -31,13 +31,13 @@ public class TestControllerApi {
     UtilisateurService utilisateurService;
 
     @InjectMocks
-    private ApiGoStyleController apiGoStyleController;
+    private ApiGoStyleUtilisateurController apiGoStyleUtilisateurController;
 
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders
-                .standaloneSetup(apiGoStyleController)
+                .standaloneSetup(apiGoStyleUtilisateurController)
                 .build();
     }
 
