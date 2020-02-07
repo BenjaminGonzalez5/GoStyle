@@ -1,4 +1,7 @@
 # GoStyle
+
+## Pour la liste des tâches qu'il restent : il faut aller dans l'onglet "issues"
+
 Développement d’une application informatique dans le respect du cahier des charges Client
 
 Documentation générale du projet :
