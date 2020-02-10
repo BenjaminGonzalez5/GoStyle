@@ -24,8 +24,12 @@ public class UtilisateurService {
 
     @Transactional
 //    Renvoie l'utilisateur correspondant a la combinaison mdp email si il existe dans la base
-    public Utilisateur getUtilisateurByEmailAndPassword(Utilisateur utilisateur) throws InvalidEmailException {
+    public Utilisateur getUtilisateurByEmailAndPassword(Utilisateur utilisateur) throws InvalidEmailException, PasDUtilisateurPourCetteCombinaisonException {
         if (! utilisateur.matchRegex()){ throw new InvalidEmailException("Email Invalid"); }
+        Utilisateur foundUtilisateur = utilisateurDao.getUtilisateurByEmailAndPassword(utilisateur.getEmail(), utilisateur.getPassword());
+        if (foundUtilisateur == null){
+            throw new PasDUtilisateurPourCetteCombinaisonException("Email ou mot de passe invalide");
+        }
         return utilisateurDao.getUtilisateurByEmailAndPassword(utilisateur.getEmail(), utilisateur.getPassword());
     }
 
@@ -33,5 +37,11 @@ public class UtilisateurService {
 //    Renvoie l'utilisateur correspondant a l'id
     public Utilisateur getUtilisateurById(long id) {
         return utilisateurDao.getUtilisateurById(id);
+    }
+
+    @Transactional
+//  Met a jour l'utilisateur dans la bdd et le retourne
+    public void updateUtilisateur(Utilisateur utilisateur) {
+        utilisateurDao.updateUtilisateur(utilisateur);
     }
 }

@@ -1,20 +1,40 @@
 package fr.epsi.b3.api.modele;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "coupon")
+@Table(name = "coupon")
 public class Coupon {
 
     @Id
-    @NotNull(message = "Code obligatoire")
-    @Size(min = 1, message = "Code obligatoire")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "code", unique = true, nullable = false)
     private String code;
-    @NotNull(message = "Description du code obligatoire")
-    @Size(min = 1, message = "Description du code obligatoire")
+
+    @Column(name = "description", nullable = false)
     private String description;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JsonBackReference
+    @JoinTable(name = "utilisateur_coupon",
+    joinColumns = @JoinColumn(name = "coupon_code", referencedColumnName = "code"),
+    inverseJoinColumns = @JoinColumn(name = "utilisateur_id", referencedColumnName = "id"))
+    private List<Utilisateur> utilisateurs = new ArrayList<>();
+
+    public List<Utilisateur> getUtilisateurs() {
+        return utilisateurs;
+    }
+
+    public void setUtilisateurs(List<Utilisateur> utilisateurs) {
+        this.utilisateurs = utilisateurs;
+    }
 
     public String getCode() {
         return code;

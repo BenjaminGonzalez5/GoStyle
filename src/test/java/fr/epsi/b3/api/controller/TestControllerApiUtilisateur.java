@@ -2,6 +2,7 @@ package fr.epsi.b3.api.controller;
 
 import com.google.gson.Gson;
 import fr.epsi.b3.api.controleur.ApiGoStyleUtilisateurController;
+import fr.epsi.b3.api.modele.Coupon;
 import fr.epsi.b3.api.modele.Utilisateur;
 import fr.epsi.b3.api.service.InvalidEmailException;
 import fr.epsi.b3.api.service.UtilisateurService;
@@ -16,11 +17,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import javax.persistence.NoResultException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 public class TestControllerApiUtilisateur {
 
@@ -97,4 +100,28 @@ public class TestControllerApiUtilisateur {
                 .content(gson.toJson(utilisateur)))
                 .andExpect(status().isBadRequest());
     }
+
+//    @Test
+//    public void getUtilisateurAfterUpdate() throws Exception {
+//        Utilisateur utilisateur = new Utilisateur();
+//        List<Coupon> couponList= new ArrayList<>();
+//        utilisateur.setEmail("nouveau@email.com");
+//        utilisateur.setPassword("pass");
+//        utilisateur.setId(1L);
+//        Coupon coupon = new Coupon();
+//        coupon.setCode("BBGH");
+//        coupon.setDescription("90%");
+//        couponList.add(coupon);
+//        utilisateur.setCoupons(couponList);
+//
+//        when(utilisateurService.updateUtilisateur(utilisateur)).thenReturn(utilisateur);
+//
+//        mockMvc.perform(put("/user")
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                .accept(MediaType.APPLICATION_JSON_VALUE)
+//                .content(gson.toJson(utilisateur)))
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+//                .andExpect(content().json(gson.toJson(utilisateur)))
+//                .andExpect(status().isOk());
+//    }
 }

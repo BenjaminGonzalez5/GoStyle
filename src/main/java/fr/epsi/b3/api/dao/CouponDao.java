@@ -25,4 +25,9 @@ public class CouponDao {
                 .setParameter("param", code)
                 .getSingleResult();
     }
+
+    public void updateCoupon(Coupon coupon) {
+        entityManager.merge(coupon);
+        entityManager.flush();
+    }
 }

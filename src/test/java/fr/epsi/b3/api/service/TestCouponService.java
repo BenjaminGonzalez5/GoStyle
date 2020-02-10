@@ -20,10 +20,10 @@ import static org.mockito.Mockito.when;
 public class TestCouponService {
 
     @InjectMocks
-    CouponService couponService;
+    private CouponService couponService;
 
     @Mock
-    CouponDao couponDao;
+    private CouponDao couponDao;
 
     @Before
     public void init() {

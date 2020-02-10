@@ -30,4 +30,9 @@ public class CouponService {
         }
         return coupon;
     }
+
+    @Transactional
+    public void updateCoupon(Coupon coupon) {
+        couponDao.updateCoupon(coupon);
+    }
 }

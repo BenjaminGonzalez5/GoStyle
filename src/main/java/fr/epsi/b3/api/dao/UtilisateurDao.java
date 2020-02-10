@@ -30,4 +30,9 @@ public class UtilisateurDao {
                 .setParameter("paramPass", pass)
                 .getSingleResult();
     }
+
+    public void updateUtilisateur(Utilisateur utilisateur) {
+        entityManager.merge(utilisateur);
+        entityManager.flush();
+    }
 }
