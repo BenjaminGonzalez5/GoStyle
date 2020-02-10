@@ -50,7 +50,7 @@ public class ApiGoStyleUtilisateurController {
     public ResponseEntity<Utilisateur> getUtilisateurFromJsonForm(@RequestBody Utilisateur utilisateur) throws InvalidEmailException, PasDUtilisateurPourCetteCombinaisonException {
         return ResponseEntity.ok().body(utilisateurService.getUtilisateurByEmailAndPassword(utilisateur));
     }
-// update
+
     @PutMapping(path = "/user", produces = MediaType.APPLICATION_JSON_VALUE, consumes =  MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<Utilisateur> getUtilisateurAfterUpdate(@RequestBody Utilisateur utilisateur) {
