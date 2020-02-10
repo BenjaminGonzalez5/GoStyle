@@ -20,7 +20,7 @@ public class ApiGoStyleCouponController {
 
     @GetMapping(path = "/coupons", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<Coupon> httpGetForCouponsList(){
+    public List<Coupon> httpGetForCouponsList() {
         return couponService.getListCoupons();
     }
 

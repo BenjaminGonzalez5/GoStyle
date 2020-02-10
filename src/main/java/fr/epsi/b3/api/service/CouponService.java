@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,7 +24,7 @@ public class CouponService {
 //    Renvoie le coupon qui correspond au code entré si il existe
     public Coupon getCouponFromId(String code) throws NoCouponForThisIdException {
         Coupon coupon = couponDao.getCouponFromId(code);
-        if(coupon == null){
+        if (coupon == null) {
             throw new NoCouponForThisIdException("Code coupon innexistant");
         }
         return coupon;

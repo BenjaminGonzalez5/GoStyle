@@ -25,9 +25,11 @@ public class UtilisateurService {
     @Transactional
 //    Renvoie l'utilisateur correspondant a la combinaison mdp email si il existe dans la base
     public Utilisateur getUtilisateurByEmailAndPassword(Utilisateur utilisateur) throws InvalidEmailException, PasDUtilisateurPourCetteCombinaisonException {
-        if (! utilisateur.matchRegex()){ throw new InvalidEmailException("Email Invalid"); }
+        if (!utilisateur.matchRegex()) {
+            throw new InvalidEmailException("Email Invalid");
+        }
         Utilisateur foundUtilisateur = utilisateurDao.getUtilisateurByEmailAndPassword(utilisateur.getEmail(), utilisateur.getPassword());
-        if (foundUtilisateur == null){
+        if (foundUtilisateur == null) {
             throw new PasDUtilisateurPourCetteCombinaisonException("Email ou mot de passe invalide");
         }
         return utilisateurDao.getUtilisateurByEmailAndPassword(utilisateur.getEmail(), utilisateur.getPassword());

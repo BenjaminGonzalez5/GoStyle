@@ -3,8 +3,6 @@ package fr.epsi.b3.api.modele;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +22,8 @@ public class Coupon {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JsonBackReference
     @JoinTable(name = "utilisateur_coupon",
-    joinColumns = @JoinColumn(name = "coupon_code", referencedColumnName = "code"),
-    inverseJoinColumns = @JoinColumn(name = "utilisateur_id", referencedColumnName = "id"))
+            joinColumns = @JoinColumn(name = "coupon_code", referencedColumnName = "code"),
+            inverseJoinColumns = @JoinColumn(name = "utilisateur_id", referencedColumnName = "id"))
     private List<Utilisateur> utilisateurs = new ArrayList<>();
 
     public List<Utilisateur> getUtilisateurs() {

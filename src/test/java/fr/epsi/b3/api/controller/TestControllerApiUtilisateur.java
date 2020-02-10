@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import fr.epsi.b3.api.controleur.ApiGoStyleUtilisateurController;
 import fr.epsi.b3.api.modele.Coupon;
 import fr.epsi.b3.api.modele.Utilisateur;
+import fr.epsi.b3.api.service.CouponService;
 import fr.epsi.b3.api.service.InvalidEmailException;
 import fr.epsi.b3.api.service.UtilisateurService;
 import org.junit.Before;
@@ -32,6 +33,9 @@ public class TestControllerApiUtilisateur {
 
     @Mock
     UtilisateurService utilisateurService;
+
+    @Mock
+    CouponService couponService;
 
     @InjectMocks
     private ApiGoStyleUtilisateurController apiGoStyleUtilisateurController;
@@ -114,7 +118,8 @@ public class TestControllerApiUtilisateur {
 //        couponList.add(coupon);
 //        utilisateur.setCoupons(couponList);
 //
-//        when(utilisateurService.updateUtilisateur(utilisateur)).thenReturn(utilisateur);
+//        doNothing().when(couponService).updateCoupon(coupon);
+//        when(utilisateurService.getUtilisateurById(utilisateur.getId())).thenReturn(utilisateur);
 //
 //        mockMvc.perform(put("/user")
 //                .contentType(MediaType.APPLICATION_JSON_VALUE)

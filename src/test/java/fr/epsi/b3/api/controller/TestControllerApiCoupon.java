@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import fr.epsi.b3.api.controleur.ApiGoStyleCouponController;
 import fr.epsi.b3.api.controleur.ApiGoStyleUtilisateurController;
 import fr.epsi.b3.api.modele.Coupon;
+import fr.epsi.b3.api.modele.Utilisateur;
 import fr.epsi.b3.api.service.CouponService;
 import fr.epsi.b3.api.service.UtilisateurService;
 import org.junit.Before;
@@ -14,6 +15,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import javax.naming.CompositeName;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,10 @@ public class TestControllerApiCoupon {
 
     private MockMvc mockMvc;
     private Gson gson = new Gson();
+    private Utilisateur utilisateur = new Utilisateur();
+    private List<Utilisateur> utilisateurs =new ArrayList<>();
+    private List<Coupon> couponList = new ArrayList<>();
+    private Coupon coupon = new Coupon();
 
     @Mock
     CouponService couponService;
@@ -39,19 +45,18 @@ public class TestControllerApiCoupon {
         mockMvc = MockMvcBuilders
                 .standaloneSetup(apiGoStyleCouponController)
                 .build();
+        utilisateur.setId(1L);
+        utilisateur.setEmail("un@email.fr");
+        utilisateur.setPassword("unpass");
+        utilisateurs.add(utilisateur);
     }
 
     @Test
     public void getListCouponsList() throws Exception {
-        List<Coupon> couponList = new ArrayList<>();
-        Coupon coupon = new Coupon();
         coupon.setCode("AAZE");
         coupon.setDescription("10%");
-        Coupon coupon1 = new Coupon();
-        coupon1.setCode("RRET");
-        coupon1.setDescription("80%");
+        coupon.setUtilisateurs(utilisateurs);
         couponList.add(coupon);
-        couponList.add(coupon1);
 
         when(couponService.getListCoupons()).thenReturn(couponList);
 
@@ -63,9 +68,9 @@ public class TestControllerApiCoupon {
 
     @Test
     public void getCouponFromCode() throws Exception {
-        Coupon coupon = new Coupon();
         coupon.setCode("AAZE");
         coupon.setDescription("10%");
+        coupon.setUtilisateurs(utilisateurs);
 
         when(couponService.getCouponFromId("AAZE")).thenReturn(coupon);
 

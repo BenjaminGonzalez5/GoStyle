@@ -19,6 +19,11 @@ import static org.mockito.Mockito.when;
 
 public class TestCouponService {
 
+    private List<Utilisateur> utilisateurs = new ArrayList<>();
+    private List<Coupon> couponList = new ArrayList<>();
+    private Coupon coupon = new Coupon();
+    private Utilisateur utilisateur= new Utilisateur();
+
     @InjectMocks
     private CouponService couponService;
 
@@ -28,20 +33,19 @@ public class TestCouponService {
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
+        utilisateur.setId(1L);
+        utilisateur.setEmail("un@email.fr");
+        utilisateur.setPassword("unpass");
+        utilisateurs.add(utilisateur);
     }
 
 
     @Test
     public void getListDesCouponsTest(){
-        List<Coupon> couponList = new ArrayList<>();
-        Coupon coupon = new Coupon();
         coupon.setCode("AAZE");
         coupon.setDescription("10%");
-        Coupon coupon1 = new Coupon();
-        coupon1.setCode("RRET");
-        coupon1.setDescription("80%");
+        coupon.setUtilisateurs(utilisateurs);
         couponList.add(coupon);
-        couponList.add(coupon1);
 
         when(couponDao.getListCoupons()).thenReturn(couponList);
 
@@ -50,8 +54,7 @@ public class TestCouponService {
 
     @Test
     public void getCouponFromIdTest() throws NoCouponForThisIdException {
-        Coupon coupon = new Coupon();
-        coupon.setCode("AAZE");
+        coupon.setCode("AAZE");;
         coupon.setDescription("10%");
 
         when(couponDao.getCouponFromId("AAZE")).thenReturn(coupon);
@@ -61,7 +64,7 @@ public class TestCouponService {
 
     @Test
     public void codeCouponNexistePasRenvoieException(){
-        Coupon coupon = new Coupon();
+        coupon.setUtilisateurs(utilisateurs);
         coupon.setCode("AAZE");
         coupon.setDescription("10%");
 
