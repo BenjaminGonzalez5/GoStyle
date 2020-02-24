@@ -1,17 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
 
     <include
         layout="@layout/header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/textView2"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Détails coupon" />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/dateExpirationDebut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:textSize="30sp"
+                android:textColor="@android:color/black"
+                android:text="32/13/2000" />
+            <TextView
+                android:id="@+id/dateExpirationFin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:textSize="30sp"
+                android:textColor="@android:color/black"
+                android:text="32/13/1000" />
+
+            <TextView
+                android:id="@+id/detailsCouponCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:text="-50%"
+                android:textColor="@android:color/black"
+                android:textSize="85sp"
+                android:background="@drawable/input_background"
+                />
+
+            <TextView
+                android:id="@+id/detailsCouponDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:textSize="30sp"
+                android:textColor="@android:color/black"
+                android:text="AF123" />
+
+            <TextView
+                android:id="@+id/expiredDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:textSize="20sp"
+                android:textColor="@android:color/holo_red_dark"
+                android:text="Coupon expiré"
+                android:visibility="invisible"/>
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

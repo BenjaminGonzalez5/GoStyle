@@ -21,7 +21,12 @@ public class Connexion extends GoStyleActivity {
 
     @Override
     public void onClick(View v) {
-        CouponListView.display(Connexion.this);
+        switch (v.getId()){
+            case R.id.buttonConnexion:
+                CouponListView.display(Connexion.this);
+                break;
+        }
+        // CouponListView.display(Connexion.this);
     }
 
 
