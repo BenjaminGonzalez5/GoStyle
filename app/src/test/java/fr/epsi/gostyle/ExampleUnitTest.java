@@ -1,6 +1,10 @@
 package fr.epsi.gostyle;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.junit.Test;
+
+import java.io.FileNotFoundException;
 
 import static org.junit.Assert.*;
 
@@ -10,29 +14,51 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class ExampleUnitTest {
+
+
+    private Connexion connexionClass = new Connexion();
+
     @Test
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
     }
 
-        /* Tester avec les appels API, à tester plus tard
+         //Tester avec les appels API, à tester plus tard
+
+    @Test
+    public void ifFileTestReturnTrueTest() {
+        boolean expected = true;
+
+        boolean result =  connexionClass.isFileExist("/test.txt");
+
+        assertEquals(expected, result);
+    }
+
+
+
     @Test
     public void correctLoginTest() throws JSONException {
 
-        //Reponse: code 200 + les infos et les coupons en json
-        JSONArray json = new JSONArray();   //Arrange
 
-        JSONArray jsonAct = user1.connexion(); //Atc
+        //Reponse : vérifier si le fichier texte existe / a été créer
+        //Reponse: code 200 + les infos et les coupons en json api = localhost/8081/gostyle_war/user
 
-        assertEquals(json, jsonAct);        //Assert
+/*        new JSONArray("{\n" +
+                " \"email\" : matthieu.rodrigues@epsi.fr" +
+                " \"password\" : AZERTY" +
+                "}");*/
+
+        connexionClass.connexion("matthieu.rodrigues@epsi.fr", "AZERTY"); //Act
+
+        //assertEquals(FILEEXIST,  connexionClass.connexion("matthieu.rodrigues@epsi.fr", "AZERTY")); //Assert
     }
-
+/*
     @Test
     public void incorrectLoginErrorTest() throws JSONException {
         //Envoie du json
         JSONArray json = new JSONArray();
 
-        JSONArray jsonAct = user1.connexion();
+        JSONArray jsonAct = connexionClass.connexion();
         //Reponse : error 400 + affichage du toast "Identifiant incorrect"
     }
 
@@ -41,18 +67,14 @@ public class ExampleUnitTest {
         //Envoie du json
         //Reponse : error 500
     }
-
+    /*
     @Test
     public void deconnexionTest() {
-        user1.deconnexion();
+        connexionClass  .deconnexion();
 
         //Tester si le fichier est supprimé ou vide (?)
-    }
+    }*/
 
-    @Test
-    public void affichageListViewTest() {
-        //tester si l'affichage de la liste view fonctionne
-    }
 
     @Test
     public void clicDetailsListViewTest() {
@@ -78,6 +100,4 @@ public class ExampleUnitTest {
     public void scanQRCodeServerConnectionLostTest() {
         //Tester si le scan de QRCode est bon mais connexion au server ne fonctionne pas (error 500)
     }
-
-     */
 }

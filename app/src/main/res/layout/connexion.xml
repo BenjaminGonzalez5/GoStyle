@@ -38,11 +38,12 @@
             android:src="@mipmap/ic_email" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/editTextUsername"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@drawable/input_background"
             android:ems="10"
+            android:text="mat@rodri.fr"
             android:gravity="center"
             android:hint="@string/placeholder_Inputemail"
             android:inputType="textEmailAddress" />
@@ -62,12 +63,13 @@
             android:src="@mipmap/ic_lock" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/editTextPassword"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:ems="10"
             android:hint="@string/placeholder_inputpassword"
             android:gravity="center"
+            android:text="unpass"
             android:background="@drawable/input_background"
             android:inputType="textPassword"
             android:singleLine="true"/>

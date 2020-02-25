@@ -12,6 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.File;
+
 import static org.junit.Assert.*;
 
 /**
@@ -22,12 +24,29 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
 
+    private Connexion connexionClass     = new Connexion();
+    
     @Test
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
         assertEquals("fr.epsi.gostyle", appContext.getPackageName());
+    }
+
+
+    @Test
+    public void ifFileTestReturnTrueTest() {
+        boolean expected = true;
+
+        boolean result =  connexionClass.isFileExist("/test.txt");
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void createFileTest() {
+        connexionClass.createFile();
     }
 }
 

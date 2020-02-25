@@ -1,15 +1,21 @@
 package fr.epsi.gostyle;
 
 import android.os.AsyncTask;
+import android.util.Log;
+
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.text.ParseException;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -37,6 +43,55 @@ class HttpAsyTask extends AsyncTask<Void, Void, Object> {
             return e;
         }
     }
+
+    void postExecute(final String urlApi, final JSONObject jsonLogin) {
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    URL url = new URL(urlApi);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                    conn.setRequestProperty("Accept", "application/json");
+                    conn.setDoOutput(true);
+                    conn.setDoInput(true);
+
+                    Log.i("JSON", jsonLogin.toString());
+                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+                    os.writeBytes(jsonLogin.toString());
+
+
+                    if(conn.getResponseCode() == 200)
+                    {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        String currentLine;
+                        while ((currentLine = br.readLine()) != null) {
+                            Log.i("BR : ", currentLine);
+                        }
+                        //return currentLine;
+                    }
+                    else {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+                        String currentLine;
+                        while ((currentLine = br.readLine()) != null) {
+                            Log.i("BR : ", currentLine);
+                        }
+                    }
+                    os.flush();
+
+                    Log.i("STATUS", String.valueOf(conn.getResponseCode()));
+
+                    os.close();
+
+                    conn.disconnect();
+                } catch (Exception e) {
+                    Log.i("ERREUR API : ",e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        });
+            thread.start();
+        }
 
     @Override
     protected void onPostExecute(Object o) {
