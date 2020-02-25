@@ -17,13 +17,6 @@ public class GoStyleActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
     }
 
-    protected void showBackBtn(){
-        ImageView imageView=findViewById(R.id.imageViewBack);
-        if(imageView!=null) {
-            imageView.setVisibility(View.VISIBLE);
-            imageView.setOnClickListener(this);
-        }
-    }
 
     protected void showCameraBtn(){
         ImageView imageView=findViewById(R.id.imageViewCamera);
@@ -42,6 +35,9 @@ public class GoStyleActivity extends AppCompatActivity implements View.OnClickLi
         switch (v.getId()){
             case R.id.imageViewBack:
                 finish();
+                break;
+            case R.id.imageViewCamera:
+                ScanCodeActivity.display(GoStyleActivity.this);
                 break;
         }
     }

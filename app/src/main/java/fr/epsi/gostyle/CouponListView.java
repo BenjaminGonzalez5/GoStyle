@@ -17,11 +17,13 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import fr.epsi.gostyle.modele.Coupon;
+import fr.epsi.gostyle.modele.Utilisateur;
 
 public class CouponListView extends GoStyleActivity {
 
     private CouponAdapter adapter;
     private ArrayList<Coupon> coupons = new ArrayList<>();
+    private String urlStr = "http://10.0.2.2:8080/API_GoStyle_war/";
 
     public static void display(GoStyleActivity activity){
         Intent intent=new Intent(activity,CouponListView.class);

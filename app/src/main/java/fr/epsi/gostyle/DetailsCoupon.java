@@ -13,10 +13,10 @@ public class DetailsCoupon extends GoStyleActivity {
 
     private Coupon coupon;
 
-    public static void display(CouponListView couponListView, Coupon coupon) {
-        Intent intent = new Intent(couponListView, DetailsCoupon.class);
+    public static void display(GoStyleActivity goStyleActivity, Coupon coupon) {
+        Intent intent = new Intent(goStyleActivity, DetailsCoupon.class);
         intent.putExtra("coupon", coupon);
-        couponListView.startActivity(intent);
+        goStyleActivity.startActivity(intent);
     }
 
     @Override

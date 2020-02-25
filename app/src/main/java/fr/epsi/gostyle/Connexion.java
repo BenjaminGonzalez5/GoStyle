@@ -26,7 +26,6 @@ public class Connexion extends GoStyleActivity {
                 CouponListView.display(Connexion.this);
                 break;
         }
-        // CouponListView.display(Connexion.this);
     }
 
 
