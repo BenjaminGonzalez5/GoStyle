@@ -25,6 +25,8 @@ DROP TABLE IF EXISTS `coupon`;
 CREATE TABLE `coupon` (
   `code` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date_debut` date DEFAULT NULL,
+  `date_fin` date DEFAULT NULL,
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -35,7 +37,7 @@ CREATE TABLE `coupon` (
 
 LOCK TABLES `coupon` WRITE;
 /*!40000 ALTER TABLE `coupon` DISABLE KEYS */;
-INSERT INTO `coupon` VALUES ('90PL','50% sur le deuxieme sweat'),('AFR1','20% T-Shirts'),('OP89','10% Total');
+INSERT INTO `coupon` VALUES ('90PL','50% sur le deuxieme sweat','2020-02-01','2020-03-12'),('AFR1','20% T-Shirts','2020-02-12','2020-02-29'),('OP89','10% Total','2020-02-01','2020-02-16');
 /*!40000 ALTER TABLE `coupon` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,7 +89,7 @@ CREATE TABLE `utilisateur_coupon` (
 
 LOCK TABLES `utilisateur_coupon` WRITE;
 /*!40000 ALTER TABLE `utilisateur_coupon` DISABLE KEYS */;
-INSERT INTO `utilisateur_coupon` VALUES (2,'90PL'),(2,'AFR1'),(4,'90PL');
+INSERT INTO `utilisateur_coupon` VALUES (2,'90PL'),(2,'AFR1');
 /*!40000 ALTER TABLE `utilisateur_coupon` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -100,4 +102,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-06 14:50:35
+-- Dump completed on 2020-02-26 13:02:20

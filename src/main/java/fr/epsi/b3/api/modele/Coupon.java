@@ -1,9 +1,11 @@
 package fr.epsi.b3.api.modele;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity(name = "coupon")
@@ -18,6 +20,14 @@ public class Coupon {
 
     @Column(name = "description", nullable = false)
     private String description;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @Column(name = "date_debut")
+    private Date date_debut;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @Column(name = "date_fin")
+    private Date date_fin;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JsonBackReference
@@ -48,5 +58,21 @@ public class Coupon {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getDate_debut() {
+        return date_debut;
+    }
+
+    public void setDate_debut(Date dateDebut) {
+        this.date_debut = dateDebut;
+    }
+
+    public Date getDate_fin() {
+        return date_fin;
+    }
+
+    public void setDate_fin(Date dateFin) {
+        this.date_fin = dateFin;
     }
 }
