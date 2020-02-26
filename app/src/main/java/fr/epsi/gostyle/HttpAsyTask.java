@@ -7,20 +7,18 @@ import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 
-import javax.net.ssl.HttpsURLConnection;
-
-class HttpAsyTask extends AsyncTask<Void, Void, Object> {
+class HttpAsyTask extends AsyncTask<String, Void, Object> {
     interface HttpAsyTaskListener{
         void webServiceDone(String result) throws ParseException;
         void webServiceError(Exception e);
@@ -35,63 +33,19 @@ class HttpAsyTask extends AsyncTask<Void, Void, Object> {
     }
 
     @Override
-    protected Object doInBackground(Void... voids) {
+    protected Object doInBackground(String... strings) {
         try {
-            return call(urlStr);
+            if (strings.length == 1){
+                return postReq(urlStr, strings[0]);
+            }
+            return getReq(urlStr);
         } catch (MalformedURLException e) {
             e.printStackTrace();
             return e;
+        } catch (IdentifiantMotDePasseException e) {
+            return e;
         }
     }
-
-    void postExecute(final String urlApi, final JSONObject jsonLogin) {
-        Thread thread = new Thread(new Runnable() {
-            public void run() {
-                try {
-                    URL url = new URL(urlApi);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-                    conn.setRequestProperty("Accept", "application/json");
-                    conn.setDoOutput(true);
-                    conn.setDoInput(true);
-
-                    Log.i("JSON", jsonLogin.toString());
-                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-                    os.writeBytes(jsonLogin.toString());
-
-
-                    if(conn.getResponseCode() == 200)
-                    {
-                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                        String currentLine;
-                        while ((currentLine = br.readLine()) != null) {
-                            Log.i("BR : ", currentLine);
-                        }
-                        //return currentLine;
-                    }
-                    else {
-                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-                        String currentLine;
-                        while ((currentLine = br.readLine()) != null) {
-                            Log.i("BR : ", currentLine);
-                        }
-                    }
-                    os.flush();
-
-                    Log.i("STATUS", String.valueOf(conn.getResponseCode()));
-
-                    os.close();
-
-                    conn.disconnect();
-                } catch (Exception e) {
-                    Log.i("ERREUR API : ",e.getMessage());
-                    e.printStackTrace();
-                }
-            }
-        });
-            thread.start();
-        }
 
     @Override
     protected void onPostExecute(Object o) {
@@ -108,7 +62,44 @@ class HttpAsyTask extends AsyncTask<Void, Void, Object> {
         }
     }
 
-    private Object call(String urlStr) throws MalformedURLException {
+    private Object postReq(String urlStr, String jsonParam) throws MalformedURLException, IdentifiantMotDePasseException {
+        try {
+            URL url = new URL(urlStr);
+            HttpURLConnection urlConnection = null;
+            if (urlStr.startsWith("http:")){
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setRequestProperty("Content-Type", "application/json; utf-8");
+                urlConnection.setRequestProperty("Accept", "application/json");
+                urlConnection.setDoOutput(true);
+                try(OutputStream os = urlConnection.getOutputStream()) {
+                    byte[] input = jsonParam.getBytes(StandardCharsets.UTF_8);
+                    os.write(input, 0, input.length);
+                }
+                if (urlConnection.getResponseCode() != 200){
+                    throw new IdentifiantMotDePasseException("Identifiant ou mot de passe incorrect");
+                }
+            }
+            try(BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {
+                StringBuilder response = new StringBuilder();
+                String responseLine = null;
+                while ((responseLine = br.readLine()) != null) {
+                    response.append(responseLine.trim());
+                }
+                return response.toString();
+            } finally {
+                urlConnection.disconnect();
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return e;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return e;
+        }
+    }
+
+    private Object getReq(String urlStr) throws MalformedURLException {
         try {
             URL url = new URL(urlStr);
             HttpURLConnection urlConnection = null;

@@ -9,12 +9,19 @@ import android.widget.ListView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import fr.epsi.gostyle.modele.Coupon;
 import fr.epsi.gostyle.modele.Utilisateur;
@@ -23,7 +30,6 @@ public class CouponListView extends GoStyleActivity {
 
     private CouponAdapter adapter;
     private ArrayList<Coupon> coupons = new ArrayList<>();
-    private String urlStr = "http://10.0.2.2:8080/API_GoStyle_war/";
 
     public static void display(GoStyleActivity activity){
         Intent intent=new Intent(activity,CouponListView.class);
@@ -44,32 +50,22 @@ public class CouponListView extends GoStyleActivity {
                 DetailsCoupon.display(CouponListView.this,coupons.get(position));
             }
         });
-        String url = "http://10.0.2.2:8080/API_GoStyle_war/coupons";
 
-        new HttpAsyTask(url, new HttpAsyTask.HttpAsyTaskListener() {
-            @Override
-            public void webServiceDone(String result) throws ParseException {
-                initData(result);
-            }
-
-            @Override
-            public void webServiceError(Exception e) {
-                displayToast(e.getMessage());
-            }
-        }).execute();
+        try {
+            initData(fileReaderUserData());
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void initData(String data) throws ParseException {
+    private void initData(String data) throws IOException, ParseException {
         try {
-            JSONArray jsonArray=new JSONArray(data);
-            for(int i=0;i<jsonArray.length();i++){
-                Coupon coupon=new Coupon(jsonArray.getJSONObject(i));
-                coupons.add(coupon);
-            }
+            JSONObject jsonElement=new JSONObject(data);
+            Utilisateur utilisateur = new Utilisateur(jsonElement);
+            coupons.addAll(utilisateur.getCoupons());
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        displayToast(String.valueOf(coupons.size()));
         adapter.notifyDataSetChanged();
     }
 

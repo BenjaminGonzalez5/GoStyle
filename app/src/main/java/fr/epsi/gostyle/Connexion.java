@@ -1,22 +1,22 @@
 package fr.epsi.gostyle;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedWriter;
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.text.ParseException;
-
-import javax.net.ssl.HttpsURLConnection;
+import java.nio.charset.StandardCharsets;
 
 public class Connexion extends GoStyleActivity {
 
@@ -25,6 +25,11 @@ public class Connexion extends GoStyleActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.connexion);
         findViewById(R.id.buttonConnexion).setOnClickListener(this);
+
+        File file = new File(this.getFilesDir(), FILE_NAME);
+        if (file.exists()){
+            CouponListView.display(Connexion.this);
+        }
     }
 
     @Override
@@ -34,45 +39,9 @@ public class Connexion extends GoStyleActivity {
         } catch (JSONException | MalformedURLException e) {
             e.printStackTrace();
         }
-        //createFile();
-        //CouponListView.display(Connexion.this);
     }
 
-    public void createFile(String result) {
-        File accountFile = new File(getFilesDir().getAbsolutePath() + "/test.txt");
-        if (!accountFile.exists()) {
-            try {
-                accountFile.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        displayToast("enter in createFile");
-        //Device File Explorer
-        try {
-            //EditText textUsername = (EditText) findViewById(R.id.editTextUsername);
-            //EditText textPassword = (EditText) findViewById(R.id.editTextPassword);
 
-            //String content = textUsername.getText().toString() + ";" + textPassword.getText().toString();
-            BufferedWriter buf = new BufferedWriter(new FileWriter(accountFile, true));
-
-            try {
-                JSONArray jsonArray=new JSONArray(result);
-                for(int i=0;i<jsonArray.length();i++){
-                    buf.newLine();
-                    displayToast("json : " + jsonArray.getJSONObject(i).toString());
-                    buf.write(jsonArray.getJSONObject(i).toString());
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                buf.close();
-            }
-            buf.close();
-            //CouponListView.display(Connexion.this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public boolean isFileExist(String filename) {
         File f = new File(getFilesDir().getAbsolutePath() + filename);
@@ -84,7 +53,7 @@ public class Connexion extends GoStyleActivity {
 
         EditText textEmail = (EditText) findViewById(R.id.editTextUsername);
         EditText textPassword = (EditText) findViewById(R.id.editTextPassword);
-        String url = "http://10.0.2.2:8081/API_GoStyle/user";
+        String url = "http://ec2-18-223-29-120.us-east-2.compute.amazonaws.com:8080/API_GoStyle-0.0.1-SNAPSHOT/user";
 
         if (!textEmail.getText().toString().equals("") && !textPassword.getText().toString().equals("")) {
             JSONObject jsonParam = new JSONObject();
@@ -93,17 +62,19 @@ public class Connexion extends GoStyleActivity {
 
             new HttpAsyTask(url, new HttpAsyTask.HttpAsyTaskListener() {
                 @Override
-                public void webServiceDone(String result) throws ParseException {
-                    //Ici : envoyer à l'API
-                    displayToast("result : " + result);
-                    createFile(result);
+                public void webServiceDone(String result) {
+                    try {
+                        createFile(result);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override
                 public void webServiceError(Exception e) {
                     displayToast(e.getMessage());
                 }
-                }).postExecute(url, jsonParam);
+                }).execute(jsonParam.toString());
 
 
         } else {
