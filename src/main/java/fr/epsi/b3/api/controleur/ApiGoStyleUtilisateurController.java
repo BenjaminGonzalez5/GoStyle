@@ -26,36 +26,68 @@ public class ApiGoStyleUtilisateurController {
     @Autowired
     private CouponService couponService;
 
+    /**
+     * Retourne une erreur lorsque l'id est introuvable
+     * @param e
+     * @return
+     */
     @ExceptionHandler(NoResultException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     public ErreurDto handleBadIdException(NoResultException e) {
         return new ErreurDto(e);
     }
 
+    /**
+     * Retourne une erreur lorsque l'email est introuvable
+     * @param e
+     * @return
+     */
     @ExceptionHandler(InvalidEmailException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     public ErreurDto handleInvalidEmailException(InvalidEmailException e) {
         return new ErreurDto(e);
     }
 
+    /**
+     * Retourne une erreur lorsque la connexion à la base de données échoue
+     * @param e
+     * @return
+     */
     @ExceptionHandler(PersistenceException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     public ErreurDto handleBadBddConnection(PersistenceException e) {
         return new ErreurDto(e);
     }
 
+    /**
+     * Retourne l'utilisateur en fonction de l'id passé en paramètre
+     * @param id
+     * @return
+     */
     @GetMapping(path = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Utilisateur getById(@PathVariable String id) {
         return utilisateurService.getUtilisateurById(Long.parseLong(id));
     }
 
+    /**
+     * Retourne l'utilisateur à partir du JSON passé en paramètre
+     * @param utilisateur
+     * @return
+     * @throws InvalidEmailException
+     * @throws PasDUtilisateurPourCetteCombinaisonException
+     */
     @PostMapping(path = "/user", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<Utilisateur> getUtilisateurFromJsonForm(@RequestBody Utilisateur utilisateur) throws InvalidEmailException, PasDUtilisateurPourCetteCombinaisonException {
         return ResponseEntity.ok().body(utilisateurService.getUtilisateurByEmailAndPassword(utilisateur));
     }
 
+    /**
+     *  Retourne l'utilisateur après l'avoir mis à jour
+     * @param utilisateur
+     * @return
+     */
     @PutMapping(path = "/user", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<Utilisateur> getUtilisateurAfterUpdate(@RequestBody Utilisateur utilisateur) {
@@ -64,6 +96,11 @@ public class ApiGoStyleUtilisateurController {
         return ResponseEntity.ok().body(utilisateurService.getUtilisateurById(utilisateur.getId()));
     }
 
+    /**
+     *  Met à jour la liste des coupons de l'utilisateur passé en paramètre
+     * @param utilisateur
+     * @return
+     */
     @NotNull
     private Utilisateur updateUtilisateurCouponListe(@RequestBody Utilisateur utilisateur) {
         Utilisateur updatedUtilisateur = utilisateurService.getUtilisateurById(utilisateur.getId());

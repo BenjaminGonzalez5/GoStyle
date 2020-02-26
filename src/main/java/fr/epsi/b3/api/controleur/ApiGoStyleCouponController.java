@@ -18,12 +18,24 @@ public class ApiGoStyleCouponController {
     @Autowired
     private CouponService couponService;
 
+    /**
+     * Route : /coupons<br/>
+     * Permet de récupérer la liste des coupons présents en base
+     * @return
+     */
     @GetMapping(path = "/coupons", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<Coupon> httpGetForCouponsList() {
         return couponService.getListCoupons();
     }
 
+    /**
+     * Route : /coupons<br/>
+     * Permet de récupérer la liste des coupons présents en base
+     * @param code
+     * @return
+     * @throws NoCouponForThisIdException
+     */
     @GetMapping(path = "/coupons/{code}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Coupon httpGetCouponFromCode(@PathVariable String code) throws NoCouponForThisIdException {

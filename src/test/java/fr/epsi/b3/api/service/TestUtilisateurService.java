@@ -40,8 +40,11 @@ public class TestUtilisateurService {
         coupon.setDescription("10% swets");
     }
 
+    /**
+     * Test si l'utilisateur est bien renvoyer si on passe un email qui existe dans la base
+     * @throws UtilisateurServiceException
+     */
     @Test
-    /* Test si l'utilisateur est bien renvoyer si on passe un email qui existe dans la base */
     public void getUtilisateurByEmailTest() throws UtilisateurServiceException {
         when(utilisateurDao.getUtilisateurByEmail("aze@aze.fr")).thenReturn(utilisateur);
 
@@ -50,8 +53,11 @@ public class TestUtilisateurService {
         assertThat(userFound).isEqualTo(utilisateur);
     }
 
+    /**
+     * Renvoie une erreur si l'utilisateur n'est pas dans la base de données
+     * @throws UtilisateurServiceException
+     */
     @Test
-//    Renvoie une erreur si l'utilisateur n'est pas dans la base de données
     public void exceptionGetUtilisateurTest() throws UtilisateurServiceException {
         when(utilisateurDao.getUtilisateurByEmail("aze@aze.fr")).thenReturn(utilisateur);
 
@@ -60,8 +66,12 @@ public class TestUtilisateurService {
         });
     }
 
+    /**
+     * Test si l'utilisateur est bien renvoyer si on passe une combinaison email mot de passe valide
+     * @throws InvalidEmailException
+     * @throws PasDUtilisateurPourCetteCombinaisonException
+     */
     @Test
-    /* Test si l'utilisateur est bien renvoyer si on passe une combinaison email mot de passe valide */
     public void getUtilisateurByEmailAndPasswordTest() throws InvalidEmailException, PasDUtilisateurPourCetteCombinaisonException {
         when(utilisateurDao.getUtilisateurByEmailAndPassword("aze@aze.fr", "pass")).thenReturn(utilisateur);
 
@@ -70,6 +80,11 @@ public class TestUtilisateurService {
         assertThat(userFound).isEqualTo(utilisateur);
     }
 
+    /**
+     * Test si l'utilisateur est bien renvoyer si on passe un id valide
+     * @throws InvalidEmailException
+     * @throws PasDUtilisateurPourCetteCombinaisonException
+     */
     @Test
     public void getUtilisateurByIdTest() {
         when(utilisateurDao.getUtilisateurById(1L)).thenReturn(utilisateur);

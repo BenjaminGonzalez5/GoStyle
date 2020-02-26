@@ -51,6 +51,10 @@ public class TestControllerApiCoupon {
         utilisateurs.add(utilisateur);
     }
 
+    /**
+     * Test pour la méthode getListCoupons de couponService
+     * @throws Exception
+     */
     @Test
     public void getListCouponsList() throws Exception {
         coupon.setCode("AAZE");
@@ -66,6 +70,10 @@ public class TestControllerApiCoupon {
                 .andExpect(content().json(gson.toJson(couponList)));
     }
 
+    /**
+     * Test pour la méthode getCouponFromId de couponService
+     * @throws Exception
+     */
     @Test
     public void getCouponFromCode() throws Exception {
         coupon.setCode("AAZE");
@@ -78,10 +86,5 @@ public class TestControllerApiCoupon {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
                 .andExpect(content().json(gson.toJson(coupon)));
-    }
-    
-    @Test
-    public void testExceptions(){
-        // TODO: 06/02/2020
     }
 }

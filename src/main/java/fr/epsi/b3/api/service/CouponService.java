@@ -14,14 +14,22 @@ public class CouponService {
     @Autowired
     private CouponDao couponDao = new CouponDao();
 
+    /**
+     * Renvoie la liste de tout les coupons présents dans la bdd
+     * @return
+     */
     @Transactional
-//    Renvoie la liste de tout les coupons présents dans la bdd
     public List<Coupon> getListCoupons() {
         return couponDao.getListCoupons();
     }
 
+    /**
+     * Renvoie le coupon qui correspond au code entré si il existe
+     * @param code
+     * @return
+     * @throws NoCouponForThisIdException
+     */
     @Transactional
-//    Renvoie le coupon qui correspond au code entré si il existe
     public Coupon getCouponFromId(String code) throws NoCouponForThisIdException {
         Coupon coupon = couponDao.getCouponFromId(code);
         if (coupon == null) {
@@ -30,6 +38,10 @@ public class CouponService {
         return coupon;
     }
 
+    /**
+     * Permet de mettre à jour le coupon passé en paramètre
+     * @param coupon
+     */
     @Transactional
     public void updateCoupon(Coupon coupon) {
         couponDao.updateCoupon(coupon);

@@ -6,6 +6,7 @@ import fr.epsi.b3.api.modele.Coupon;
 import fr.epsi.b3.api.modele.Utilisateur;
 import fr.epsi.b3.api.service.CouponService;
 import fr.epsi.b3.api.service.InvalidEmailException;
+import fr.epsi.b3.api.service.PasDUtilisateurPourCetteCombinaisonException;
 import fr.epsi.b3.api.service.UtilisateurService;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,6 +49,11 @@ public class TestControllerApiUtilisateur {
                 .build();
     }
 
+    /**
+     * Test si l'utilisateur est bien renvoyer si on passe une combinaison email mot de passe valide
+     * @throws InvalidEmailException
+     * @throws PasDUtilisateurPourCetteCombinaisonException
+     */
     @Test
     public void getUserFromIdTest() throws Exception {
         Utilisateur utilisateur = new Utilisateur();
@@ -63,6 +69,11 @@ public class TestControllerApiUtilisateur {
                 .andExpect(content().json(gson.toJson(utilisateur)));
     }
 
+    /**
+     * Test si une erreur est bien renvoyer si on passe un id invalide
+     * @throws InvalidEmailException
+     * @throws PasDUtilisateurPourCetteCombinaisonException
+     */
     @Test
     public void getBadRequestWhenIdDontExiste() throws Exception {
 
@@ -72,6 +83,11 @@ public class TestControllerApiUtilisateur {
                 .andExpect(status().isBadRequest());
     }
 
+    /**
+     * Test si l'utilisateur est bien renvoyer si on passe une combinaison email mot de passe valide
+     * @throws InvalidEmailException
+     * @throws PasDUtilisateurPourCetteCombinaisonException
+     */
     @Test
     public void getUserFromEmailAndPasswordJson() throws Exception {
         Utilisateur utilisateur = new Utilisateur();
@@ -90,6 +106,11 @@ public class TestControllerApiUtilisateur {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Test si l'utilisateur est bien renvoyer si on passe une combinaison email mot de passe valide
+     * @throws InvalidEmailException
+     * @throws PasDUtilisateurPourCetteCombinaisonException
+     */
     @Test
     public void getBadRequestWhenEmailIsInvalid() throws Exception {
         Utilisateur utilisateur = new Utilisateur();
@@ -105,28 +126,27 @@ public class TestControllerApiUtilisateur {
                 .andExpect(status().isBadRequest());
     }
 
-//    @Test
-//    public void getUtilisateurAfterUpdate() throws Exception {
-//        Utilisateur utilisateur = new Utilisateur();
-//        List<Coupon> couponList= new ArrayList<>();
-//        utilisateur.setEmail("nouveau@email.com");
-//        utilisateur.setPassword("pass");
-//        utilisateur.setId(1L);
-//        Coupon coupon = new Coupon();
-//        coupon.setCode("BBGH");
-//        coupon.setDescription("90%");
-//        couponList.add(coupon);
-//        utilisateur.setCoupons(couponList);
-//
-//        doNothing().when(couponService).updateCoupon(coupon);
-//        when(utilisateurService.getUtilisateurById(utilisateur.getId())).thenReturn(utilisateur);
-//
-//        mockMvc.perform(put("/user")
-//                .contentType(MediaType.APPLICATION_JSON_VALUE)
-//                .accept(MediaType.APPLICATION_JSON_VALUE)
-//                .content(gson.toJson(utilisateur)))
-//                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-//                .andExpect(content().json(gson.toJson(utilisateur)))
-//                .andExpect(status().isOk());
-//    }
+    @Test
+    public void getUtilisateurAfterUpdate() throws Exception {
+        Utilisateur utilisateur = new Utilisateur();
+        List<Coupon> couponList= new ArrayList<>();
+        utilisateur.setEmail("nouveau@email.com");
+        utilisateur.setPassword("pass");
+        utilisateur.setId(1L);
+        Coupon coupon = new Coupon();
+        coupon.setCode("BBGH");
+        coupon.setDescription("90%");
+        couponList.add(coupon);
+        utilisateur.setCoupons(couponList);
+
+        doNothing().when(couponService).updateCoupon(coupon);
+        when(utilisateurService.getUtilisateurById(utilisateur.getId())).thenReturn(utilisateur);
+
+        mockMvc.perform(put("/user")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .content(gson.toJson(utilisateur)))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk());
+    }
 }

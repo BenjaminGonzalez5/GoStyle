@@ -12,9 +12,14 @@ public class UtilisateurService {
     @Autowired
     private UtilisateurDao utilisateurDao = new UtilisateurDao();
 
+    /**
+     * Renvoi l'utilisateur rataché a l'email passer en paramètre
+     * un erreur si l'email est incorrecte
+     * @param s
+     * @return
+     * @throws UtilisateurServiceException
+     */
     @Transactional(rollbackFor = UtilisateurServiceException.class)
-    /* Renvoi l'utilisateur rataché a l'email passer en paramettre
-     * un erreur si l'email est incorrecte */
     public Utilisateur getUtilisateurByEmail(String s) throws UtilisateurServiceException {
         if (utilisateurDao.getUtilisateurByEmail(s) == null) {
             throw new UtilisateurServiceException("Aucun compte utilisateur trouvé.");
@@ -22,8 +27,14 @@ public class UtilisateurService {
         return utilisateurDao.getUtilisateurByEmail(s);
     }
 
+    /**
+     * Renvoie l'utilisateur correspondant a la combinaison mdp email si il existe dans la base
+     * @param utilisateur
+     * @return
+     * @throws InvalidEmailException
+     * @throws PasDUtilisateurPourCetteCombinaisonException
+     */
     @Transactional
-//    Renvoie l'utilisateur correspondant a la combinaison mdp email si il existe dans la base
     public Utilisateur getUtilisateurByEmailAndPassword(Utilisateur utilisateur) throws InvalidEmailException, PasDUtilisateurPourCetteCombinaisonException {
         if (!utilisateur.matchRegex()) {
             throw new InvalidEmailException("Email Invalid");
@@ -35,14 +46,21 @@ public class UtilisateurService {
         return utilisateurDao.getUtilisateurByEmailAndPassword(utilisateur.getEmail(), utilisateur.getPassword());
     }
 
-    @Transactional
-//    Renvoie l'utilisateur correspondant a l'id
+    /**
+     * Renvoie l'utilisateur correspondant a l'id
+     * @param id
+     * @return
+     */
+    @Transactional 
     public Utilisateur getUtilisateurById(long id) {
         return utilisateurDao.getUtilisateurById(id);
     }
 
+    /**
+     * Met a jour l'utilisateur dans la bdd et le retourne
+     * @param utilisateur
+     */
     @Transactional
-//  Met a jour l'utilisateur dans la bdd et le retourne
     public void updateUtilisateur(Utilisateur utilisateur) {
         utilisateurDao.updateUtilisateur(utilisateur);
     }

@@ -39,7 +39,11 @@ public class TestCouponService {
         utilisateurs.add(utilisateur);
     }
 
-
+    /**
+     * Test si la liste des coupons est bien renvoyer
+     * @throws InvalidEmailException
+     * @throws PasDUtilisateurPourCetteCombinaisonException
+     */
     @Test
     public void getListDesCouponsTest(){
         coupon.setCode("AAZE");
@@ -52,6 +56,11 @@ public class TestCouponService {
         assertThat(couponService.getListCoupons()).isEqualTo(couponList);
     }
 
+    /**
+     * Test si le coupon est bien renvoyer si on passe un id valide
+     * @throws InvalidEmailException
+     * @throws PasDUtilisateurPourCetteCombinaisonException
+     */
     @Test
     public void getCouponFromIdTest() throws NoCouponForThisIdException {
         coupon.setCode("AAZE");;
@@ -62,6 +71,11 @@ public class TestCouponService {
         assertThat(couponService.getCouponFromId("AAZE")).isEqualTo(coupon);
     }
 
+    /**
+     * Test si une erreur est bien renvoyer si on passe un id invalide
+     * @throws InvalidEmailException
+     * @throws PasDUtilisateurPourCetteCombinaisonException
+     */
     @Test
     public void codeCouponNexistePasRenvoieException(){
         coupon.setUtilisateurs(utilisateurs);
